@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Produits </title>
+</head>
+<body>
+<div th:replace="navbar"></div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Liste des produits</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Produit ID</th>
+                        <th>Nom Produit</th>
+                        <th>Prix Produit</th>
+                        <th>Date de creation</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produit : ${produits.content}">
+                            <td th:text="${produit.Idproduit}"></td>
+                            <td th:text="${produit.NomProduit}"></td>
+                            <td th:text="${produit.PrixProduit}"></td>
+                            <td th:text="${produit.createat}"></td>
+                            <td>
+                                <a th:href="@{supprimerproduit(Idproduit=${produit.Idproduit}, page=${currentPage}, size=${size})}" class="btn btn-danger" onclick="confirm('Are you sure?')">Supprimer</a>
+
+                                <a th:href="@{pagemodifer(Idproduit=${produit.Idproduit})}" class="btn btn-primary">Modifier</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="page,status: ${pages}" class="nav-item">
+                        <a th:class="${status.index == currentPage ? 'btn btn-primary' : 'btn btn-outline-primary'}"
+                           th:href="@{listProduits(page=${status.index}, size=${size})}"
+                            th:text="${status.index}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
